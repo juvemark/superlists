@@ -13,11 +13,11 @@ class NewVisitorTest(unittest.TestCase):
 		self.browser.quit()
 		
 	def test_can_start_a_list_and_retrieve_it_later(self):
-		# 伊迪丝听说有一个很酷的在线待办事项应用， 她去看了这个应用的首页 
+		# input http://localhost:8090 to access webpage
 		self.browser.get('http://localhost:8090')
 
-		# 她注意到网页的标题和头部都包括'TO-Do'
-		assert 'To-Do' in browser.title
+		# there is a 'TO-Do' in the title
+		assert 'To-Do' in self.browser.title
 
 		# Application invide her to input an item
 
