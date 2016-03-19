@@ -2,6 +2,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import unittest
+import time
 
 #browser = webdriver.Firefox()
 
@@ -16,6 +17,7 @@ class NewVisitorTest(unittest.TestCase):
 	def test_can_start_a_list_and_retrieve_it_later(self):
 		# input http://localhost:8090 to access webpage
 		self.browser.get('http://localhost:8090')
+		#time.sleep(10)
 
 		# there is a 'TO-Do' in the title
 		self.assertIn( 'To-Do', self.browser.title)
@@ -35,7 +37,10 @@ class NewVisitorTest(unittest.TestCase):
 
 		table = self.browser.find_element_by_id('id_list_table')
 		rows =  table.find_element_by_tag_name('tr')
-		self.assertTrue( any(row.text == '1: Buy peacock feathers' for row in rows))
+		self.assertTrue(
+			any(row.text == '1: Buy peacock feathers' for row in rows),
+			"Now to-do item did not appear in table"
+		 )
 
 		# Show another dialog and it is possible to input another item
 		# She input "Use peacock feathers to make a fly"
