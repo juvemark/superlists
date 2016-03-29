@@ -54,7 +54,7 @@ class NewVisitorTest(LiveServerTestCase):
 		self.check_for_row_in_list_table('2: Use peacock feathers to make a fly')
 
 		# Now a new user Francsis visit the user
-		self.browser.quit()
+		self.browser.close()
 		self.browser=webdriver.Firefox()
 		# He visis the front page
 		# Cannot see the list of her
@@ -77,8 +77,6 @@ class NewVisitorTest(LiveServerTestCase):
 		page_text = self.browser.find_element_by_tag_name('body').text
 		self.assertNotIn('Buy peacock feathers', page_text)
 		self.assertIn('Buy milk', page_text)
-
-
 		# She saw a URL, and some explanation about this URL
 
 		# She visit the URL and found the list still exists
