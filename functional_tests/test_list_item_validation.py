@@ -5,7 +5,7 @@ from selenium.webdriver.common.keys import Keys
 from unittest import skip
 
 class ItemValidationTest(FunctionalTest):
-	@skip
+
 	def test_ca_innot_add_empty_list_items(self):
 		# Edith visit main page and input a empty item
 		self.browser.get(self.server_url)
