@@ -3,27 +3,32 @@ from django.test import TestCase
 from django.http import HttpRequest
 from lists.views import home_page
 from lists.models import Item, List
+from lists.forms import ItemForm
 from django.utils.html import escape
 from django.template.loader import render_to_string
 
 # Create your tests here.
 class HomePageTest(TestCase):
-    def test_root_url_resolves_to_home_page_view(self):
-        found = resolve('/')
-        self.assertEqual(found.func, home_page)
 
-    def test_home_page_returns_correct_html(self):
-        request = HttpRequest()
-        response = home_page(request)
-        expected_html = render_to_string('home.html',request=request)
-        self.assertEqual(response.content.decode(), expected_html)
-        #self.assertIn('A new list item', response.content.decode())
-        #expected_html = render_to_string(
-        #    'home.html',
-        #    {'new_item_text': 'A new list item'},
-        #    request=request
-        #)
-        #self.assertEqual(response.content.decode(), expected_html)
+    # maxDiff = None
+    #
+    # def test_root_url_resolves_to_home_page_view(self):
+    #     found = resolve('/')
+    #     self.assertEqual(found.func, home_page)
+    #
+    # def test_home_page_returns_correct_html(self):
+    #     request = HttpRequest()
+    #     response = home_page(request)
+    #     expected_html = render_to_string('home.html', {'form':ItemForm()}, request=request )
+    #     self.assertMultiLineEqual(response.content.decode(), expected_html)
+
+    def test_home_page_renders_home_template(self):
+        response = self.client.get('/')
+        self.assertTemplateUsed(response, 'home.html')
+
+    def test_home_page_users_item_form(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
 
 class ListViewTest(TestCase):
     def test_displays_only_items_for_that_list(self):
