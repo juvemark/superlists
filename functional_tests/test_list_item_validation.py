@@ -12,7 +12,7 @@ class ItemValidationTest(FunctionalTest):
 		self.get_item_input_box().send_keys('\n')
 
 		# The main page refresh, and an error message shows
-		error = self.browser.find_element_by_css_selector('.has-error')
+		error = self.get_error_element()
 		self.assertEqual(error.text, "You can't have an empty list item")
 
 		# She input some words and submit again
@@ -23,7 +23,7 @@ class ItemValidationTest(FunctionalTest):
 		self.get_item_input_box().send_keys('\n')
 
 		# same error message shows
-		error = self.browser.find_element_by_css_selector('.has-error')
+		error = self.get_error_element()
 		self.assertEqual(error.text, "You can't have an empty list item")
 
 		# After input some words it works
@@ -42,5 +42,22 @@ class ItemValidationTest(FunctionalTest):
 
 		# She saw an error message
 		self.check_for_row_in_list_table('1: Buy wellies')
-		error = self.browser.find_element_by_css_selector('.has-error')
+		error = self.get_error_element()
 		self.assertEqual(error.text, "You've already got this in your list")
+
+	def test_error_messages_are_cleared_on_input(self):
+		# Edith new a list, but wrong way, so there is an error message
+		self.browser.get(self.server_url)
+		self.get_item_input_box().send_keys('\n')
+		error = self.get_error_element()
+		self.assertTrue(error.is_displayed())
+
+		#In order to make it correct, she starts to input content
+		self.get_item_input_box().send_keys('a')
+
+		# The error message disappear
+		error = self.get_error_element()
+		self.assertFalse(error.is_displayed())
+
+	def get_error_element(self):
+		return self.browser.find_element_by_css_selector('.has-error')
