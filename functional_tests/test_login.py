@@ -8,7 +8,7 @@ class LoginTest(FunctionalTest):
         # Edith visit this super good website
         # There is a sign in link
         self.browser.get(self.server_url)
-        self.browser.find_element_by_id('login').click()
+        self.browser.find_element_by_id('id_login').click()
 
         # Persona dialog shows
         self.switch_to_new_window('Mozilla Persona')
@@ -21,7 +21,7 @@ class LoginTest(FunctionalTest):
         self.switch_to_new_window('To-Do')
 
         #She found she has already log in
-        self.wait_for_element_with_id('logout')
+        self.wait_for_element_with_id('id_logout')
         navbar = self.browser.find_element_by_css_selector('.navbar')
         self.assertIn('edith@mockmyid.com', navbar.text)
 
